@@ -8,3 +8,7 @@ This enables us to see where certain types of accidents happen more often. We di
 For example compare deer accidents to accidents in general:
 ![alt text](https://github.com/DavidNovikov/hackio2021/blob/main/CrashSeverity.png?raw=true)
 ![alt text](https://github.com/DavidNovikov/hackio2021/blob/main/AnimalDeerRelated.png?raw=true)
+
+We can also generate scatter plots that indicate accident severity
+
+![alt text](https://github.com/DavidNovikov/hackio2021/blob/main/motorcycleaccidents.png?raw=true)
