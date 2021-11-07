@@ -34,6 +34,6 @@ def avgRiskDictionary(xmin, xmax, ymin, ymax, step, df, index):
         length = len(entry)
         if(length > 0):
             sum = sum / len(entry)
-        avgRiskDictValues[key] = sum*5
+        avgRiskDictValues[key] = sum
 
     return avgRiskDictValues
