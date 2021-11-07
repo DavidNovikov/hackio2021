@@ -4,18 +4,14 @@ accidentTypeToNumber = {
     "Injury Possible": 4,
     "Serious Injury Suspected": 3,
     "Minor Injury Suspected": 2,
-    "Property Damage Only": 1}
-accidentTypeToColor = {
-    "Fatal": 'red',
-    "Injury Possible": 'yellow',
-    "Serious Injury Suspected": 'orange',
-    "Property Damage Only": 'blue',
-    "Minor Injury Suspected": 'green'}
+    "Property Damage Only": 1,
+    True: 1,
+    False: 0}
 
 # averages all points in area
 
 
-def avgRiskDictionary(xmin, xmax, ymin, ymax, step, df):
+def avgRiskDictionary(xmin, xmax, ymin, ymax, step, df, index):
 
     # initilize
     avgRiskDict = {}
@@ -34,7 +30,7 @@ def avgRiskDictionary(xmin, xmax, ymin, ymax, step, df):
     for key, entry in avgRiskDict.items():
         sum = 0
         for row in entry:
-            sum += accidentTypeToNumber[row.CrashSeverity]
+            sum += accidentTypeToNumber[row[index+1]]
         length = len(entry)
         if(length > 0):
             sum = sum / len(entry)

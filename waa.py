@@ -4,6 +4,9 @@ import numpy as np
 
 from dictPopulating import avgRiskDictionary
 
+# MODIFY THIS ONE, NAMES OF VALID ONES ARE FROM COLUMNS
+whichStrName = "CrashSeverity"
+
 accidentTypeToColor = {
     "Fatal": 'red',
     "Injury Possible": 'yellow',
@@ -26,7 +29,7 @@ columns = ["Latitude", "Longitude", "CrashSeverity",
            "TeenRelated",
            "DUI21Related",
            "SeniorRelated"]
-
+# this is the range for our data points
 xMax = 40.15
 xMin = 39.75
 yMax = -82.7
@@ -38,7 +41,7 @@ df = df.drop(df[df.Latitude > 90].index)
 df = df.drop(df[df.Longitude < -90].index)
 df = df.drop(df[pd.isna(df.Longitude)].index)
 df = df.drop(df[pd.isna(df.Latitude)].index)
-df = df.drop(df[df.CrashSeverity != "Property Damage Only"].index)
+# df = df.drop(df[df.CrashSeverity != "Property Damage Only"].index)
 # df = df.drop(df[df.AnimalRelated == False].index)
 # df = df.drop(df[df.AnimalDeerRelated == False].index)
 # df = df.drop(df[df.AlcoholRelated == False].index)
@@ -53,22 +56,30 @@ df = df.drop(df[df.CrashSeverity != "Property Damage Only"].index)
 # df = df.drop(df[df.TeenRelated == False].index)
 # df = df.drop(df[df.DUI21Related == False].index)
 # df = df.drop(df[df.SeniorRelated == False].index)
-colors = [accidentTypeToColor[crashtype] for crashtype in df.CrashSeverity]
-plt.gca().legend(accidentTypeToColor)
-print("Contents in csv file:\n", df)
-heat = avgRiskDictionary(xMin, xMax, yMin, yMax, step, df)
-# plt.scatter(df.Longitude, df.Latitude, c=colors, s=.25)
+# colors = [accidentTypeToColor[crashtype] for crashtype in df.CrashSeverity]
+# plt.gca().legend(accidentTypeToColor)
+# print("Contents in csv file:\n", df)
+heat = avgRiskDictionary(xMin, xMax, yMin, yMax, step,
+                         df, df.columns.get_loc(whichStrName))
 # plt.axis('square')
 # plt.imshow(heat, cmap='hot', interpolation='nearest')
 fig, ax = plt.subplots()
-x = list(set([i[0] for i in heat.keys()]))
-y = list(set([i[1] for i in heat.keys()]))
-x.sort()
-y.sort()
-Z = np.array([[h for h in heat.values()]])
-shape = (len(x), len(y))
-Z = Z.reshape(shape)
-ax.pcolormesh(y, x, Z)
+x = [i[0] for i in heat.keys()]
+y = [i[1] for i in heat.keys()]
+xHeat = list(set(x))
+yHeat = list(set(y))
+xHeat.sort()
+yHeat.sort()
+Z = [h for h in heat.values()]
+shape = (len(xHeat), len(yHeat))
+Zshaped = np.array([Z]).reshape(shape)
+ax.pcolormesh(yHeat, xHeat, Zshaped)
 ax.set_aspect('equal', adjustable='box')
+smallerdf = pd.DataFrame({'x': x,
+                          'y': y,
+                         'score': Z})
+
+smallerdf.to_csv(whichStrName + '.csv', index=False)
+# plt.scatter(x, y, s=.25)
 # plt.axis('square')
 plt.show()
