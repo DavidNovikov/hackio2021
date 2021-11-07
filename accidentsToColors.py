@@ -1,5 +1,5 @@
 import pandas as pd
-columns = ["CrashSeverity"]
+columns = ["Weather"]
 df = pd.read_csv("crashclean2.csv", usecols=columns)
-for x in df.CrashSeverity.unique():
+for x in df.Weather.unique():
     print(x)
