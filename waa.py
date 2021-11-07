@@ -1,11 +1,12 @@
-import pandas as pd
-from matplotlib import pyplot as plt
-import numpy as np
-
 from dictPopulating import avgRiskDictionary
+import numpy as np
+from matplotlib import pyplot as plt
+import pandas as pd
+step = 0.0005
+
 
 # MODIFY THIS ONE, NAMES OF VALID ONES ARE FROM COLUMNS
-whichStrName = "CrashSeverity"
+whichStrName = "BicycleRelated"
 
 accidentTypeToColor = {
     "Fatal": 'red',
@@ -34,7 +35,6 @@ xMax = 40.15
 xMin = 39.75
 yMax = -82.7
 yMin = -83.3
-step = 0.0005
 
 df = pd.read_csv("crashclean2.csv", usecols=columns)
 df = df.drop(df[df.Latitude > 90].index)
@@ -74,7 +74,7 @@ yHeat.sort()
 Z = [h for h in heat.values()]
 shape = (len(xHeat), len(yHeat))
 Zshaped = np.array([Z]).reshape(shape)
-ax.pcolormesh(yHeat, xHeat, Zshaped)
+heatmap = ax.pcolormesh(yHeat, xHeat, Zshaped)
 ax.set_aspect('equal', adjustable='box')
 smallerdf = pd.DataFrame({'x': x,
                           'y': y,
@@ -83,4 +83,8 @@ smallerdf = pd.DataFrame({'x': x,
 smallerdf.to_csv(whichStrName + '.csv', index=False)
 # plt.scatter(x, y, s=.25)
 # plt.axis('square')
+plt.colorbar(heatmap)
+ax.set_ylabel('Longitude')
+ax.set_xlabel('Latitude')
+ax.set_title('Frequency of car accidents in Franklin County by ' + whichStrName)
 plt.show()
