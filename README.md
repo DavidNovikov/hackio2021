@@ -11,4 +11,5 @@ For example compare deer accidents to accidents in general:
 
 We can also generate scatter plots that indicate accident severity
 
+For example this is the severity of every motorcycle accident in the past 5 years
 ![alt text](https://github.com/DavidNovikov/hackio2021/blob/main/motorcycleaccidents.png?raw=true)
